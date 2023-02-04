@@ -173,12 +173,13 @@ jobs:
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
 
-    - name: Upload firmware to release
-      uses: softprops/action-gh-release@v1
+    - name: Release to GitHub
+      uses: ncipollo/release-action@v1.8.6
       if: steps.tag.outputs.status == 'success' && !cancelled()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
-        body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
+          prerelease: false
+          bodyFile: release.txt
+          tag: ${{ steps.tag.outputs.release_tag }}
+          name: "HiWiFi R33"
+          artifacts: ${{ env.FIRMWARE }}/*
+          token: ${{ secrets.GITHUB_TOKEN }}
