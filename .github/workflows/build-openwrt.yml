@@ -76,11 +76,6 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
-    - name: Clone XCode
-      run: |
-        cd openwrt
-        git clone https://${{ secrets.USER_TOKEN }}@github.com/${{ secrets.USER_NAME }}/OpenXray.git package/OpenXray
-
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
 
